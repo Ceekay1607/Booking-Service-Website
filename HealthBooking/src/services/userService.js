@@ -124,13 +124,15 @@ let createNewUser = (data) => {
                 // console.log('check pass word', hashPasswordFromBcrypt);
                 await db.User.create({
                     email: data.email,
-                    password: 'hashPasswordFromBcrypt',
+                    password: hashPasswordFromBcrypt,
                     firstName: data.firstName,
                     lastName: data.lastName,
                     address: data.address,
                     phonenumber: data.phonenumber,
-                    gender: data.gender === 1 ? true : false,
-                    roleId: data.roleId
+                    gender: data.gender,
+                    roleId: data.roleId,
+                    positionId: data.positionId,
+                    image: data.avatar
                 })
             }
 
@@ -190,6 +192,15 @@ let updateUserData = (data) => {
                 user.firstName = data.firstName;
                 user.lastName = data.lastName;
                 user.address = data.address;
+                user.roleId = data.roleId;
+                user.positionId = data.positionId;
+                user.geder = data.gender;
+                user.phonenumber = data.phonenumber;
+                if (data.avatar) {
+                    user.image = data.avatar;
+                }
+
+
 
                 await user.save();
 
