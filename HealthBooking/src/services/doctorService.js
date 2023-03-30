@@ -51,19 +51,33 @@ let getAllDoctorsService = () => {
 let saveDetailInforDoctor = (inputData) => {
     return new Promise(async (resolve, reject) => {
         try {
-            if (!inputData.doctorId || !inputData.contentHTML || !inputData.contentMarkdown) {
+            if (!inputData.doctorId || !inputData.contentHTML || !inputData.contentMarkdown || !inputData.action) {
                 resolve({
                     errCode: 1,
                     errMessage: 'Missing input parameters'
 
                 })
             } else {
-                await db.Markdown.create({
-                    contentHTML: inputData.contentHTML,
-                    contentMarkdown: inputData.contentMarkdown,
-                    description: inputData.description,
-                    doctorId: inputData.doctorId
-                })
+                if (inputData.action === 'CREATE') {
+                    await db.Markdown.create({
+                        contentHTML: inputData.contentHTML,
+                        contentMarkdown: inputData.contentMarkdown,
+                        description: inputData.description,
+                        doctorId: inputData.doctorId
+                    })
+                } else if (inputData.action === 'EDIT') {
+                    let doctoMarkdown = await db.Markdown.findOne({
+                        where: { doctorId: inputData.doctorId },
+                        raw: false
+                    })
+
+                    if (doctoMarkdown) {
+                        doctoMarkdown.contentHTML = inputData.contentHTML;
+                        doctoMarkdown.contentMarkdown = inputData.contentMarkdown;
+                        doctoMarkdown.description = inputData.description;
+                        await doctoMarkdown.save();
+                    }
+                }
                 resolve({
                     errCode: 0,
                     errMessage: 'save detail infor success'
@@ -89,7 +103,7 @@ let getDetailDoctorById = (id) => {
                         id: id
                     },
                     attributes: {
-                        exclude: ['password', 'image']
+                        exclude: ['password']
                     },
                     include: [
                         {
@@ -98,9 +112,15 @@ let getDetailDoctorById = (id) => {
                         },
                         { model: db.Allcode, as: 'positionData', attributes: ['valueEn', 'valuevi'] }
                     ],
-                    raw: true,
+                    raw: false,
                     nest: true
                 })
+
+                if (data && data.image) {
+                    data.image = new Buffer(data.image, 'base64').toString('binary');
+                }
+
+                if (!data) data = {};
 
                 resolve({
                     errCode: 0,
