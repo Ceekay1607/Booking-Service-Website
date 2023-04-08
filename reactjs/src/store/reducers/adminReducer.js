@@ -6,59 +6,52 @@ const initialState = {
     positions: [],
     users: [],
     topDoctors: [],
-    allDoctors: []
+    allDoctors: [],
+    allScheduleTime: []
 
 }
 
 const adminReducer = (state = initialState, action) => {
     switch (action.type) {
         case actionTypes.FETCH_GENDER_START:
-            console.log('action GenderStart: ', action);
             return {
                 ...state
             }
 
         case actionTypes.FETCH_GENDER_SUCCESS:
             state.genders = action.data;
-            console.log('fire fetch gender success: ', state)
             return {
                 ...state
             }
 
         case actionTypes.FETCH_GENDER_FAIL:
-            console.log('action GenderFail: ', action);
             return {
                 ...state
             }
 
         case actionTypes.FETCH_POSITION_SUCCESS:
             state.positions = action.data;
-            console.log('fire fetch position success: ', state)
             return {
                 ...state
             }
 
         case actionTypes.FETCH_POSITION_FAIL:
-            console.log('action position: ', action);
             return {
                 ...state
             }
 
         case actionTypes.FETCH_ROLE_SUCCESS:
             state.roles = action.data;
-            console.log('fire fetch role success: ', state)
             return {
                 ...state
             }
 
         case actionTypes.FETCH_ROLE_FAIL:
-            console.log('action position: ', action);
             return {
                 ...state
             }
 
         case actionTypes.FETCH_ALL_USERS_SUCCESS:
-            console.log('fire fetch all success: ', state)
             state.users = action.users;
             return {
                 ...state
@@ -71,7 +64,6 @@ const adminReducer = (state = initialState, action) => {
             }
 
         case actionTypes.FETCH_TOP_DOCTORS_SUCCESS:
-            console.log('fire fetch get top doctor: ', state)
             state.topDoctors = action.dataDoctors;
             return {
                 ...state
@@ -84,7 +76,6 @@ const adminReducer = (state = initialState, action) => {
             }
 
         case actionTypes.FETCH_ALL_DOCTORS_SUCCESS:
-            console.log('fire fetch get all doctor: ', state)
             state.allDoctors = action.dataDr;
             return {
                 ...state
@@ -92,6 +83,18 @@ const adminReducer = (state = initialState, action) => {
 
         case actionTypes.FETCH_ALL_DOCTORS_FAIL:
             state.topDoctors = [];
+            return {
+                ...state
+            }
+
+        case actionTypes.FETCH_ALLCODE_SCHEDULE_TIME_SUCCESS:
+            state.allScheduleTime = action.dataTime;
+            return {
+                ...state
+            }
+
+        case actionTypes.FETCH_ALLCODE_SCHEDULE_TIME_FAIL:
+            state.allScheduleTime = [];
             return {
                 ...state
             }
