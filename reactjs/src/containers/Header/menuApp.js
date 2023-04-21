@@ -53,6 +53,9 @@ export const doctorMenu = [
         menus: [
             { // Quan ly lich kham cua bac si
                 name: 'menu.doctor.manage-schedule', link: '/doctor/manage-schedule'
+            },
+            { // Quan ly benh nhan cua bac si
+                name: 'menu.doctor.manage-patient', link: '/doctor/manage-patient'
             }
         ]
     }

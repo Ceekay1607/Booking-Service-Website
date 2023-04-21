@@ -1,21 +1,20 @@
-import specialtyService from '../services/specialtyService';
-
-let createSpecialty = async (req, res) => {
+import clinicService from '../services/clinicService';
+let createClinic = async (req, res) => {
     try {
-        let infor = await specialtyService.createSpecialty(req.body);
+        let infor = await clinicService.createClinic(req.body);
         return res.status(200).json(infor)
     } catch (e) {
         console.log(e);
         return res.status(200).json({
             errCode: -1,
-            errMessage: 'error from server'
+            errMessage: 'error from the server'
         })
     }
 }
 
-let getAllSpecialty = async (req, res) => {
+let getAllClinic = async (req, res) => {
     try {
-        let infor = await specialtyService.getAllSpecialty(req.body);
+        let infor = await clinicService.getAllClinic();
         return res.status(200).json(infor);
     } catch (e) {
         console.log(e);
@@ -26,9 +25,9 @@ let getAllSpecialty = async (req, res) => {
     }
 }
 
-let getDetailSpecialtyById = async (req, res) => {
+let getDetailClinicById = async (req, res) => {
     try {
-        let infor = await specialtyService.getDetailSpecialtyById(req.query.id, req.query.location);
+        let infor = await clinicService.getDetailClinicById(req.query.id);
         return res.status(200).json(infor)
     } catch (e) {
         console.log(e);
@@ -40,5 +39,5 @@ let getDetailSpecialtyById = async (req, res) => {
 }
 
 module.exports = {
-    createSpecialty, getAllSpecialty, getDetailSpecialtyById
+    createClinic, getAllClinic, getDetailClinicById
 }
